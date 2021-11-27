@@ -1,7 +1,7 @@
-<%= form_with(model: screening, data: {seats: 3 }) do |form| %>
+<%= form_with(model: reservation, data: {seats: 3 }) do |form| %>
   <% (1..48).each do |key| %>
     <%= puts key == 2 %>
-    <%= form.check_box :matine, { multiple: true, checked: [1,2,3,4,5,6,7].include?(key) }, key, nil %>
+    <%= form.check_box :matine, { multiple: true, disabled: [1,2,3,4,5,6,7].include?(key) }, key, nil %>
   <% end %>
 
   <div class=cinema-seats>
