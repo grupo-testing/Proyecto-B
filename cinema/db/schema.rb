@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2021_11_27_010731) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "seat_number", null: false
+    t.integer "screening_id"
+    t.index ["screening_id"], name: "index_reservations_on_screening_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -38,12 +40,10 @@ ActiveRecord::Schema.define(version: 2021_11_27_010731) do
     t.datetime "updated_at", precision: 6, null: false
     t.date "first_day", null: false
     t.date "last_day", null: false
-    t.integer "rooms_id"
-    t.integer "movies_id"
-    t.integer "reservations_id"
-    t.index ["movies_id"], name: "index_screenings_on_movies_id"
-    t.index ["reservations_id"], name: "index_screenings_on_reservations_id"
-    t.index ["rooms_id"], name: "index_screenings_on_rooms_id"
+    t.integer "room_id"
+    t.integer "movie_id"
+    t.index ["movie_id"], name: "index_screenings_on_movie_id"
+    t.index ["room_id"], name: "index_screenings_on_room_id"
   end
 
 end

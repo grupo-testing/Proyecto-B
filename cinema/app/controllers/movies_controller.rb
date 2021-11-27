@@ -10,28 +10,35 @@ class MoviesController < ApplicationController
   def show
   end
 
-  # GET /movies/new
   def new
-    @movie = Movie.new
   end
 
   # GET /movies/1/edit
   def edit
   end
 
-  # POST /movies or /movies.json
   def create
-    @movie = Movie.new(movie_params)
-
-    respond_to do |format|
-      if @movie.save
-        format.html { redirect_to @movie, notice: "Movie was successfully created." }
-        format.json { render :show, status: :created, location: @movie }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @movie.errors, status: :unprocessable_entity }
-      end
+    if params[:matine].nil? && params[:tanda].nil? && params[:noche].nil?
+      render :new, status: :unprocessable_entity
+      return
     end
+    if params[:last_day].blank? || params[:first_day].blank?
+      render :new, status: :unprocessable_entity
+      return
+    end
+
+    @movie = Movie.new(name: params[:name], img: params[:img])
+
+    if !@movie.save!
+      render :new, status: :unprocessable_entity
+      return
+    end
+
+    assing_rooms(params[:matine], first_day: params[:first_day], last_day: params[:last_day], schedule: 0)
+    assing_rooms(params[:tanda],  first_day: params[:first_day], last_day: params[:last_day], schedule: 1)
+    assing_rooms(params[:noche],  first_day: params[:first_day], last_day: params[:last_day], schedule: 2)
+
+    redirect_to screenings_path, notice: "Movie was successfully created."
   end
 
   # PATCH/PUT /movies/1 or /movies/1.json
@@ -62,8 +69,18 @@ class MoviesController < ApplicationController
       @movie = Movie.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
-    def movie_params
-      params.require(:movie).permit(:name)
+    def assing_rooms rooms_names, screening_params 
+      return true if rooms_names.nil?
+      rooms_names.each do |room_name|
+        room_number = get_room room_name
+        screening = @movie.screenings.create(**screening_params, room_id: room_number)
+        return false if !screening.valid?
+      end
+      true
+    end
+
+    def get_room room
+      rooms_hash = { "sala1" => 1, "sala2" => 2, "sala3" => 3, "sala4" => 4, "sala5" => 5, "sala6" => 6, "sala7" => 7, "sala8" => 8}
+      rooms_hash[room]
     end
 end
