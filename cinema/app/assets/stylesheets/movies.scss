@@ -2,18 +2,46 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-header {
-  height: 75px;
-  border-bottom: 1px solid black;
-  margin-bottom: 30px;
-  display: grid;
-  place-items: center;
-}
-
 .row {
   display: flex;
+  justify-content: center;
 }
 
 .col {
-  width: 25%;
+  flex: 1;
+}
+
+.row-rooms {
+  display: flex;
+}
+
+.col-rooms {
+  width: 20%;
+}
+
+.new-movie-input {
+  width: 90%;
+  border: 2px solid #eee;
+  border-radius: 3px;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+.new-movie-label {
+  display: block;
+}
+
+.movies-new-form {
+  margin: 0 auto;
+}
+
+.movies-actions {
+  text-align: center;
+}
+
+.movies-actions input {
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: rgb(138, 237, 255);
+  border: 0;
 }

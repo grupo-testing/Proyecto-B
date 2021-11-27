@@ -78,3 +78,16 @@ div.actions {
   font-size: 12px;
   list-style: square;
 }
+
+header {
+  height: 75px;
+  border-bottom: 1px solid black;
+  margin-bottom: 30px;
+  display: grid;
+  place-items: center;
+}
+
+.layout-container {
+  margin-left: 250px;
+  margin-right: 250px;
+}
