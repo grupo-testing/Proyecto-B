@@ -1,0 +1,22 @@
+<%= form_with(model: screening) do |form| %>
+  <% if screening.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(screening.errors.count, "error") %> prohibited this screening from being saved:</h2>
+
+      <ul>
+        <% screening.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :schedule %>
+    <%= form.number_field :schedule %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
