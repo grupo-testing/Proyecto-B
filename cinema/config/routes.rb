@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'movies#new'
   get '/movies/new', to: 'movies#new'
+  get '/movies/:id', to: 'movies#show'
   post '/movies/new', to: 'movies#create', as: 'movies_create'
   resources :reservations
   resources :screenings

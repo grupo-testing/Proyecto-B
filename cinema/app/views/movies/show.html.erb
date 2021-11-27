@@ -4,6 +4,19 @@
   <strong>Name:</strong>
   <%= @movie.name %>
 </p>
+<img src=<%= @movie.img%> alt="Movie Image" width="200" height="300">
+<p>Matine</p>
+<% for screening in @movie.screenings.where(schedule: 0) do %>
+  Sala <%= screening.room.number%>
+<% end %>
 
-<%= link_to 'Edit', edit_movie_path(@movie) %> |
-<%= link_to 'Back', movies_path %>
+<p>Tanda</p>
+<% for screening in @movie.screenings.where(schedule: 1) do %>
+  Sala <%= screening.room.number%>
+<% end %>
+
+<p>Noche</p>
+<% for screening in @movie.screenings.where(schedule: 2) do %>
+  Sala <%= screening.room.number%>
+<% end %>
+
