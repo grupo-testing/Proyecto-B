@@ -1,22 +1,18 @@
-<%= form_with(model: reservation) do |form| %>
-  <% if reservation.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
-
-      <ul>
-        <% reservation.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+<%= form_with(model: screening, data: {seats: 3 }) do |form| %>
+  <% (1..48).each do |key| %>
+    <%= puts key == 2 %>
+    <%= form.check_box :matine, { multiple: true, checked: [1,2,3,4,5,6,7].include?(key) }, key, nil %>
   <% end %>
 
-  <div class="field">
-    <%= form.label :user_name %>
-    <%= form.text_field :user_name %>
+  <div class=cinema-seats>
+    <% (1..48).each do |key| %>
+      <div class="box" id=<%=key%>></div>
+    <% end %>
   </div>
-
+ <% Reservation.all.map { |r| r.seat_number } %>
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+
+<%= javascript_pack_tag 'reservation' %>

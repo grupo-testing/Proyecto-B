@@ -1,3 +1,23 @@
 // Place all the styles related to the Reservations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.cinema-seats {
+  width: 960px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.box {
+  width: 78px;
+  height: 45px;
+  border: 1px solid #444;
+  margin: 0;
+  padding: 0;
+  background-color: green;
+}
+
+.selected {
+  background-color: blue;
+}
