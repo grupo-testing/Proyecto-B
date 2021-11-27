@@ -1,19 +1,55 @@
-<%= form_with(model: movie) do |form| %>
-  <% if movie.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
+<%= form_with url: movies_create_path do |form| %>
+  <div class="row">
+    <div class="col">
+      <div class="field">
+        <%= form.label :name %>
+        <%= form.text_field :name %>
+      </div>
 
-      <ul>
-        <% movie.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <div class="field">
+        <%= form.label :img %>
+        <%= form.text_field :img %>
+      </div>
     </div>
-  <% end %>
+    <div class="col">
+      <div class="field">
+        <%= form.label :first_day %>
+        <%= form.date_field :first_day, min: Date.today %>
+      </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+      <div class="field">
+        <%= form.label :last_day %>
+        <%= form.date_field :last_day, min: Date.today %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h3>Matine</h3>
+      <% Room::ROOMS.each do |key| %>
+        <%= form.check_box :matine, { multiple: true }, key, nil %>
+        <%= form.label key%>
+        <br>
+      <% end %>
+    </div>
+
+    <div class="col">
+      <h3>Tanda</h3>
+      <% Room::ROOMS.each do |key| %>
+        <%= form.check_box :tanda, { multiple: true }, key, nil %>
+        <%= form.label key%>
+        <br>
+      <% end %>
+    </div>
+    <div class="col">
+      <h3>Noche</h3>
+      <% Room::ROOMS.each do |key| %>
+        <%= form.check_box :noche, { multiple: true }, key, nil %>
+        <%= form.label key%>
+        <br>
+      <% end %>
+    </div>
   </div>
 
   <div class="actions">

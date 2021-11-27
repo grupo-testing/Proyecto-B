@@ -1,3 +1,5 @@
 class Movie < ApplicationRecord
-  belongs_to :screening
+  has_many :screenings
+  validates :name, presence: true
+  validates :img, presence: true
 end
