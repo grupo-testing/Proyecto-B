@@ -38,6 +38,10 @@ class MoviesController < ApplicationController
       render :new, status: :unprocessable_entity
       return
     end
+    if params[:last_day] < params[:first_day]
+      render :new, status: :unprocessable_entity
+      return
+    end
 
     @movie = Movie.new(name: params[:name], img: params[:img])
 
