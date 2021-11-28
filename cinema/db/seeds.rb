@@ -8,6 +8,7 @@
 (1..8).each do |n|
   Room.create(number: n)
 end
+
 movie1 = Movie.create(name: 'Spiderman', img: 'https://cloudfront-us-east-1.images.arcpublishing.com/elcomercio/D4IRKEAH7NDKPOMYJ5DMYVMLGA.jpg')
 movie2 = Movie.create(name: 'Sonic', img: 'https://es.web.img2.acsta.net/pictures/19/11/12/12/25/0815514.jpg')
 
