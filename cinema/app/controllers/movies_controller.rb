@@ -3,19 +3,8 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    p Movie.first.screenings
-    if !flash[:date].nil?
-      @date = flash[:date]
-      @movies = Movie.all.filter {|m| m.screenings.first.first_day <= Date.parse(@date) && m.screenings.first.last_day >= Date.parse(@date)}
-    else
-      @date = Date.today
-      @movies = Movie.all.filter {|m| m.screenings.first.first_day <= @date && m.screenings.first.last_day >= @date}
-    end
-  end
-
-  def search_movies
-    flash[:date] = params[:date]
-    redirect_to root_path
+    @screening = Screening.all().where("first_day < #{params[:date]} AND last_day > #{params[:date]}").order(movie_id: :asc)
+    @movies = Movie.all()
   end
 
   # GET /movies/1 or /movies/1.json

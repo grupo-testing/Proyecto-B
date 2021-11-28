@@ -3,42 +3,36 @@
 
 <p id="notice"><%= notice %></p>
 
-<%= link_to "Agregar Película", movies_new_path, class: "add-movie-btn" %>
-
-<%= form_with(url: search_movies_path) do |form| %>
-  <div class="field">
-    <%= form.label :date, 'Fecha', class: "new-movie-label" %>
-    <%= form.date_field :date, min: Date.today, value: @date, class: "new-movie-input" %>
+<h1>Movies</h1>
+<%= form_with url: root_path, class: "movies-date-form" do |form| %>
+  <div>
+    <div class="field">
+    <%= form.label :first_day, class: "date-movie-label" %>
+    <%= form.date_field :first_day, value: Date.today, min: Date.today,class: "date-movie-input" %>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= form.submit "Cambiar fecha" %>
+  <div class="movies-actions">
+    <%= form.submit %>
   </div>
 <% end %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @screening.each do |screen| %>
+      <tr>
+        <td><%= screen.movie.name %></td>
+        <td><%= link_to 'Show', movie_show_path(screen.movie.id) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <h1>Películas</h1>
 
-<div class="movies-list">
-<% @movies.each do |movie| %>
-  <%= link_to select_screening_path(movie, date: @date), class: "movie-card" do%>
-    <img src=<%= movie.img %> alt=<%= movie.name %> width="240" height="300"> 
-    <h2><%= movie.name %></h2>
-    <h3>Horarios</h3>
-    <p><span>Matine: </span>
-      <% movie.screenings.filter{|s| s.schedule == 0}.each_with_index do |s,i| %>
-        <%= (i + 1) < movie.screenings.filter{|s| s.schedule == 0}.length ? "SALA #{s.room_id}, " : "SALA #{s.room_id}" %>
-      <% end %>
-    </p>
-    <p><span>Tanda: </span>
-      <% movie.screenings.filter{|s| s.schedule == 1}.each_with_index do |s,i| %>
-        <%= (i + 1) < movie.screenings.filter{|s| s.schedule == 1}.length ? "SALA #{s.room_id}, " : "SALA #{s.room_id}" %>
-      <% end %>
-    </p>
-    <p><span>Noche: </span>
-      <% movie.screenings.filter{|s| s.schedule == 2}.each_with_index do |s,i| %>
-        <%= (i + 1) < movie.screenings.filter{|s| s.schedule == 2}.length ? "SALA #{s.room_id}, " : "SALA #{s.room_id}" %>
-      <% end %>
-    </p>
-  <% end %>
-<% end %>
-</div>
+<%= link_to 'New Movie', movies_new_path %>
