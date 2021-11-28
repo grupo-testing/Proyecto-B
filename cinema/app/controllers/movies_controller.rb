@@ -34,17 +34,26 @@ class MoviesController < ApplicationController
 
   def create
     if params[:matine].nil? && params[:tanda].nil? && params[:noche].nil?
-      render :new, status: :unprocessable_entity
+      redirect_back(fallback_location: root_path, alert: "Elige una sala")
       return
     end
     if params[:last_day].blank? || params[:first_day].blank?
-      render :new, status: :unprocessable_entity
+      redirect_back(fallback_location: root_path, alert: "Elige dia de inicio y dia de término")
       return
     end
     if params[:last_day] < params[:first_day]
-      render :new, status: :unprocessable_entity
+      redirect_back(fallback_location: root_path, alert: "El dia de inicio debe ser menor al dia de término")
       return
     end
+    if params[:name].blank?
+      redirect_back(fallback_location: root_path, alert: "Nombre es un campo obligatorio")
+      return
+    end
+    if params[:img].blank?
+      redirect_back(fallback_location: root_path, alert: "Url de la imagen es un campo obligatorio")
+      return
+    end
+
 
     screenings = Screening.all
     filtered = screenings.select do |s| 
@@ -59,24 +68,26 @@ class MoviesController < ApplicationController
     tanda = filtered.select{ |s| s.schedule == 1 }.map { |s| s.room_id }
     noche = filtered.select{ |s| s.schedule == 2 }.map { |s| s.room_id }
     if !params[:matine].nil? && (matine & params[:matine].map{ |r| get_room r }).length > 0
-      render :new, status: :unprocessable_entity
+      redirect_back(fallback_location: root_path, alert: "Sala ocupada en horario Matine")
       return
     end
     if !params[:tanda].nil? && (tanda & params[:tanda].map{ |r| get_room r }).length > 0
-      render :new, status: :unprocessable_entity
+      redirect_back(fallback_location: root_path, alert: "Sala ocupada en horario Tanda")
       return
     end
     if !params[:noche].nil? && (noche & params[:noche].map{ |r| get_room r }).length > 0
-      render :new, status: :unprocessable_entity
+      redirect_back(fallback_location: root_path, alert: "Sala ocupada en horario Noche")
       return
     end
 
     @movie = Movie.new(name: params[:name], img: params[:img])
 
-    if !@movie.save!
-      render :new, status: :unprocessable_entity
+    if !@movie.valid?
+      redirect_back(fallback_location: root_path, alert: "El Nombre ya existe")
       return
     end
+
+    @movie.save!
 
     assing_rooms(params[:matine], first_day: params[:first_day], last_day: params[:last_day], schedule: 0)
     assing_rooms(params[:tanda],  first_day: params[:first_day], last_day: params[:last_day], schedule: 1)
