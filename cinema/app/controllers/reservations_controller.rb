@@ -10,9 +10,31 @@ class ReservationsController < ApplicationController
   def show
   end
 
-  # GET /reservations/new
+  def schedules
+    @date = params[:date]
+    @screenings = Movie.find(params[:id]).screenings
+    @matine = @screenings.filter{ |s| s.schedule == 0 }
+    @tanda = @screenings.filter{ |s| s.schedule == 1 }
+    @noche = @screenings.filter{ |s| s.schedule == 2 }
+  end
+
+  def schedule
+    if params[:screening_id].nil? || params[:date].blank?
+      redirect_back(fallback_location: root_path, alert: "Elige la sala")
+      return
+    end
+    screening = Screening.find(params[:screening_id])
+    flash[:date] = params[:date]
+    redirect_to reservations_new_path screening, date: params[:date]
+  end
+
   def new
-    @reservation = Reservation.new
+    p flash[:date], params[:date]
+    @date = params[:date]
+    @screening = Screening.find(params[:id])
+    @unavailable_seats = @screening.reservations.filter{ |r| r.date == @date }.map { |r| r.seat_number }
+    @seats = 2
+    # create reservation with the screening
   end
 
   # GET /reservations/1/edit
@@ -21,17 +43,15 @@ class ReservationsController < ApplicationController
 
   # POST /reservations or /reservations.json
   def create
-    @reservation = Reservation.new(reservation_params)
-
-    respond_to do |format|
-      if @reservation.save
-        format.html { redirect_to @reservation, notice: "Reservation was successfully created." }
-        format.json { render :show, status: :created, location: @reservation }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
+    if params[:seats].nil?
+      redirect_back(fallback_location: root_path, alert: "Elige los asientos")
+      return
     end
+    screening = Screening.find(params[:id])
+    params[:seats].each do |seat_num|
+      screening.reservations.create(seat_number: seat_num, date: params[:date])
+    end
+    redirect_to movies_new_path, notice: "Reservation was successfully created."
   end
 
   # PATCH/PUT /reservations/1 or /reservations/1.json
@@ -60,10 +80,5 @@ class ReservationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_reservation
       @reservation = Reservation.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def reservation_params
-      params.require(:reservation).permit(:user_name)
     end
 end

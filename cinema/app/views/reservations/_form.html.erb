@@ -1,7 +1,9 @@
-<%= form_with(model: reservation, data: {seats: 3 }) do |form| %>
+<p><%= alert %></p>
+
+<%= form_with(url: reservations_create_path(@screening), data: {seats: @seats }) do |form| %>
+  <%= form.hidden_field :date, value: @date %>
   <% (1..48).each do |key| %>
-    <%= puts key == 2 %>
-    <%= form.check_box :matine, { multiple: true, disabled: [1,2,3,4,5,6,7].include?(key) }, key, nil %>
+    <%= form.check_box :seats, { multiple: true, disabled: @unavailable_seats.include?(key) }, key, nil %>
   <% end %>
 
   <div class=cinema-seats>
@@ -9,7 +11,6 @@
       <div class="box" id=<%=key%>></div>
     <% end %>
   </div>
- <% Reservation.all.map { |r| r.seat_number } %>
   <div class="actions">
     <%= form.submit %>
   </div>

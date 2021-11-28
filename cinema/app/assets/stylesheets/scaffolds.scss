@@ -80,9 +80,10 @@ div.actions {
 }
 
 header {
-  height: 75px;
+  background-color: #eee;
+  height: 95px;
   border-bottom: 1px solid black;
-  margin-bottom: 30px;
+  margin-bottom: 0;
   display: grid;
   place-items: center;
 }
@@ -90,4 +91,11 @@ header {
 .layout-container {
   margin-left: 250px;
   margin-right: 250px;
+  margin-top: 0;
+  padding-top: 30px;
+}
+
+body {
+  background-color: #fbfbfb;
+  margin: 0;
 }

@@ -3,7 +3,18 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.all
+    if !flash[:date].nil?
+      @date = flash[:date]
+      @movies = Movie.all
+    else
+      @date = Date.today
+      @movies = Movie.all      
+    end
+  end
+
+  def search_movies
+    flash[:date] = params[:date]
+    redirect_to root_path
   end
 
   # GET /movies/1 or /movies/1.json

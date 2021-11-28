@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2021_11_27_010731) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "seat_number", null: false
+    t.date "date", null: false
     t.integer "screening_id"
     t.index ["screening_id"], name: "index_reservations_on_screening_id"
   end
