@@ -32,7 +32,7 @@ class ReservationsController < ApplicationController
     p flash[:date], params[:date]
     @date = params[:date]
     @screening = Screening.find(params[:id])
-    @unavailable_seats = @screening.reservations.filter{ |r| r.date == @date }.map { |r| r.seat_number }
+    @unavailable_seats = @screening.reservations.filter{ |r| r.date == Date.parse(@date) }.map { |r| r.seat_number }
     @seats = params[:seats].to_i
     # create reservation with the screening
   end
@@ -47,7 +47,11 @@ class ReservationsController < ApplicationController
       redirect_back(fallback_location: root_path, alert: "Elige los asientos")
       return
     end
+    puts '----------------------'
+    p params[:seats]
     screening = Screening.find(params[:id])
+    p screening.reservations
+    puts '--------------------'
     params[:seats].each do |seat_num|
       screening.reservations.create(seat_number: seat_num, date: params[:date])
     end
