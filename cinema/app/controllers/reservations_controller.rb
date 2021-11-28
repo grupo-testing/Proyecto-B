@@ -51,7 +51,7 @@ class ReservationsController < ApplicationController
     params[:seats].each do |seat_num|
       screening.reservations.create(seat_number: seat_num, date: params[:date])
     end
-    redirect_to movies_new_path, notice: "Reservation was successfully created."
+    redirect_to root_path, notice: "Reservation was successfully created."
   end
 
   # PATCH/PUT /reservations/1 or /reservations/1.json
