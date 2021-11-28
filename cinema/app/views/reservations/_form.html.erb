@@ -2,8 +2,13 @@
 
 <%= form_with(url: reservations_create_path(@screening), data: {seats: @seats }) do |form| %>
   <%= form.hidden_field :date, value: @date %>
+
+  <div class="field">
+    <%= form.label :name, class: "new-movie-label" %>
+    <%= form.text_field :name,class: "new-movie-input" %>
+  </div>
+
   <% (1..48).each do |key| %>
-    <% p @unavailable_seats %>
     <%= form.check_box :seats, { multiple: true, disabled: @unavailable_seats.include?(key), style: 'display:none' }, key, nil %>
   <% end %>
 

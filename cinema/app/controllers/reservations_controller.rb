@@ -47,13 +47,9 @@ class ReservationsController < ApplicationController
       redirect_back(fallback_location: root_path, alert: "Elige los asientos")
       return
     end
-    puts '----------------------'
-    p params[:seats]
     screening = Screening.find(params[:id])
-    p screening.reservations
-    puts '--------------------'
     params[:seats].each do |seat_num|
-      screening.reservations.create(seat_number: seat_num, date: params[:date])
+      screening.reservations.create(seat_number: seat_num, date: params[:date], user_name: params[:name])
     end
     redirect_to root_path, notice: "Reservation was successfully created."
   end
