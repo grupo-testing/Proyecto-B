@@ -25,7 +25,7 @@ class ReservationsController < ApplicationController
     end
     screening = Screening.find(params[:screening_id])
     flash[:date] = params[:date]
-    redirect_to reservations_new_path screening, date: params[:date]
+    redirect_to reservations_new_path screening, date: params[:date], seats: params[:seats]
   end
 
   def new
@@ -33,7 +33,7 @@ class ReservationsController < ApplicationController
     @date = params[:date]
     @screening = Screening.find(params[:id])
     @unavailable_seats = @screening.reservations.filter{ |r| r.date == @date }.map { |r| r.seat_number }
-    @seats = 2
+    @seats = params[:seats].to_i
     # create reservation with the screening
   end
 

@@ -3,12 +3,13 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
+    p Movie.first.screenings
     if !flash[:date].nil?
       @date = flash[:date]
-      @movies = Movie.all
+      @movies = Movie.all.filter {|m| m.screenings.first.first_day <= Date.parse(@date) && m.screenings.first.last_day >= Date.parse(@date)}
     else
       @date = Date.today
-      @movies = Movie.all      
+      @movies = Movie.all.filter {|m| m.screenings.first.first_day <= @date && m.screenings.first.last_day >= @date}
     end
   end
 
@@ -49,7 +50,7 @@ class MoviesController < ApplicationController
     assing_rooms(params[:tanda],  first_day: params[:first_day], last_day: params[:last_day], schedule: 1)
     assing_rooms(params[:noche],  first_day: params[:first_day], last_day: params[:last_day], schedule: 2)
 
-    redirect_to screenings_path, notice: "Movie was successfully created."
+    redirect_to root_path, notice: "Movie was successfully created."
   end
 
   # PATCH/PUT /movies/1 or /movies/1.json

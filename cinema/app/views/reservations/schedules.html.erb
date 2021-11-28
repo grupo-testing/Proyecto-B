@@ -6,6 +6,9 @@
 <%= form_with(url: reservations_schedule_path) do |form| %>
   <%= form.hidden_field :date, value: @date %>
 
+  <%= form.label :seats, "Seats number" %>
+  <%= form.select :seats, (1..12) %>
+
   <div class="screenings-list">
     <div class="screening-card">
       <h3>Matine</h3>
