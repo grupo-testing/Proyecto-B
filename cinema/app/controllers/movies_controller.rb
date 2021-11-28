@@ -3,7 +3,6 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    p Movie.first.screenings
     if !flash[:date].nil?
       @date = flash[:date]
       @movies = Movie.all.filter {|m| m.screenings.first.first_day <= Date.parse(@date) && m.screenings.first.last_day >= Date.parse(@date)}
@@ -20,6 +19,10 @@ class MoviesController < ApplicationController
 
   # GET /movies/1 or /movies/1.json
   def show
+    @date = params[:date]
+    @matine = @movie.screenings.where(schedule: 0)
+    @tanda = @movie.screenings.where(schedule: 1)
+    @noche = @movie.screenings.where(schedule: 2)
   end
 
   def new
