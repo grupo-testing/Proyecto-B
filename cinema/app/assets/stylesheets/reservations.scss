@@ -3,6 +3,14 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 .cinema-seats {
+  p{
+    width: 960px;
+    background-color: cadetblue;
+    text-align: center;
+    font-size: xxx-large;
+    height: 25px;
+    padding: 20px 0px;
+  }
   width: 960px;
   display: flex;
   flex-wrap: wrap;
@@ -16,6 +24,11 @@
   margin: 0;
   padding: 0;
   background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: whitesmoke;
 }
 
 .taken {
@@ -24,4 +37,5 @@
 
 .selected {
   background-color: rgba(255, 255, 0, 0.808);
+  color: black
 }

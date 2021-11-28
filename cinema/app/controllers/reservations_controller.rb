@@ -12,6 +12,7 @@ class ReservationsController < ApplicationController
 
   def schedules
     @date = params[:date]
+    @movie = Movie.find(params[:id])
     @screenings = Movie.find(params[:id]).screenings
     @matine = @screenings.filter{ |s| s.schedule == 0 }
     @tanda = @screenings.filter{ |s| s.schedule == 1 }

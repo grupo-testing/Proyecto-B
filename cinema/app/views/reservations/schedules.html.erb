@@ -6,37 +6,57 @@
 <%= form_with(url: reservations_schedule_path) do |form| %>
   <%= form.hidden_field :date, value: @date %>
 
-  <%= form.label :seats, "Cantidad de asientos" %>
-  <%= form.select :seats, (1..12) %>
-
-  <div class="screenings-list">
-    <div class="screening-card">
-      <h3>Matine</h3>
-      <% @matine.each do |screening| %>
-        <%= form.radio_button :screening_id, screening.id %>
-        <%= form.label :screening_id, "Sala #{screening.room_id}" %>
-        <br>
-      <% end %>
+<div class="row" style="min-width: 80%;">
+  <div class="col">
+    <strong>Name: </strong><%= @movie.name %>
+    <br>
+    <strong>Fecha: </strong><%= @date %>
+    <br>
+    <br>
+    <strong>Reserva: </strong>
+    <br>
+    <%= form.label :seats, "Cantidad de asientos" %>
+    <%= form.select :seats, (1..12) %>
+    <div class="row">
+      <div class="col">
+        <div class="screening-card">
+          <h3>Matine</h3>
+          <p> 17:00 - 19:00 </p>
+          <% @matine.each do |screening| %>
+            <%= form.radio_button :screening_id, screening.id %>
+            <%= form.label :screening_id, "Sala #{screening.room_id}" %>
+            <br>
+          <% end %>
+        </div>
+      </div>
+      <div class="col">
+        <div class="screening-card">
+          <h3>Tanda</h3>
+          <p> 19:00 - 21:00 </p>
+          <% @tanda.each do |screening| %>
+            <%= form.radio_button :screening_id, screening.id %>
+            <%= form.label :screening_id, "Sala #{screening.room_id}" %>
+            <br>
+          <% end %>
+          </div>
+      </div>
+      <div class="col">
+        <div class="screening-card">
+          <h3>Noche</h3>
+          <p> 19:00 - 21:00 </p>
+          <% @noche.each do |screening| %>
+            <%= form.radio_button :screening_id, screening.id %>
+            <%= form.label :screening_id, "Sala #{screening.room_id}" %>
+            <br>
+          <% end %>
+        </div>
+      </div>
     </div>
-    <div class="screening-card">
-      <h3>Tanda</h3>
-      <% @tanda.each do |screening| %>
-        <%= form.radio_button :screening_id, screening.id %>
-        <%= form.label :screening_id, "Sala #{screening.room_id}" %>
-        <br>
-      <% end %>
-    </div>
-    <div class="screening-card">
-      <h3>Noche</h3>
-      <% @noche.each do |screening| %>
-        <%= form.radio_button :screening_id, screening.id %>
-        <%= form.label :screening_id, "Sala #{screening.room_id}" %>
-        <br>
-      <% end %>
+    <div class="actions" style="justify-content: flex-end; display: flex; margin-right: 14px;">
+      <%= form.submit "Guardar Reserva"%>
     </div>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="col" style= "max-width: 20%;">
+    <img class="" src=<%= @movie.img%> alt="Movie Image" width="200" height="300">
   </div>
 <% end %>

@@ -13,8 +13,11 @@
   <% end %>
 
   <div class=cinema-seats>
+    <p> Pantalla </p>
     <% (1..48).each do |key| %>
-      <div class="box" id=<%=key%>></div>
+      <div class="box" id=<%=key%>>
+        <span><%= get_seat_label(key) %></span>
+      </div>
     <% end %>
   </div>
   <div class="actions">
