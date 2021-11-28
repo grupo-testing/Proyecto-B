@@ -32,14 +32,14 @@ end
   movie1.screenings.create(**screening_params_n, room_id: room)
 end
 
-[2,3,5,7,8].each do |room|
+[2,4,6,7,8].each do |room|
   movie2.screenings.create(**screening_params2_m, room_id: room)
 end
 
-[1,3,4,5].each do |room|
+[1,3,4].each do |room|
   movie2.screenings.create(**screening_params2_t, room_id: room)
 end
 
-[8].each do |room|
+[6].each do |room|
   movie2.screenings.create(**screening_params2_n, room_id: room)
 end

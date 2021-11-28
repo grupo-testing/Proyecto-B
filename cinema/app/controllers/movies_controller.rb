@@ -43,6 +43,31 @@ class MoviesController < ApplicationController
       return
     end
 
+    screenings = Screening.all
+    filtered = screenings.select do |s| 
+      if s.first_day <= Date.parse(params[:last_day]) && s.last_day >= Date.parse(params[:first_day])
+        true
+      else
+        false
+      end
+    end
+    
+    matine = filtered.select{ |s| s.schedule == 0 }.map { |s| s.room_id }
+    tanda = filtered.select{ |s| s.schedule == 1 }.map { |s| s.room_id }
+    noche = filtered.select{ |s| s.schedule == 2 }.map { |s| s.room_id }
+    if !params[:matine].nil? && (matine & params[:matine].map{ |r| get_room r }).length > 0
+      render :new, status: :unprocessable_entity
+      return
+    end
+    if !params[:tanda].nil? && (tanda & params[:tanda].map{ |r| get_room r }).length > 0
+      render :new, status: :unprocessable_entity
+      return
+    end
+    if !params[:noche].nil? && (noche & params[:noche].map{ |r| get_room r }).length > 0
+      render :new, status: :unprocessable_entity
+      return
+    end
+
     @movie = Movie.new(name: params[:name], img: params[:img])
 
     if !@movie.save!
