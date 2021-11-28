@@ -43,8 +43,8 @@ class ReservationsController < ApplicationController
 
   # POST /reservations or /reservations.json
   def create
-    if params[:seats].nil?
-      redirect_back(fallback_location: root_path, alert: "Elige los asientos")
+    if params[:seats].nil? || params[:name].blank?
+      redirect_back(fallback_location: root_path, alert: params[:seats].nil? ? "Elige los asientos": "Escribe el nombre de la reserva")
       return
     end
     screening = Screening.find(params[:id])
