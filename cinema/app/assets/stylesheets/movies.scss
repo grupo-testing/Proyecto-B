@@ -45,3 +45,37 @@
   background-color: rgb(138, 237, 255);
   border: 0;
 }
+
+.movie-card {
+  border: 1px solid #bbb;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 10px;
+  margin: 5px;
+  width: 240px;
+}
+
+.movie-card h2,
+h3 {
+  text-align: center;
+}
+
+.movie-card span {
+  font-weight: bold;
+}
+
+.movie-card p {
+  overflow-wrap: break-word;
+}
+
+.movies-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.add-movie-btn {
+  padding: 5px 10px;
+  background-color: lightblue;
+  border: 2px solid #eee;
+  border-radius: 5px;
+}
