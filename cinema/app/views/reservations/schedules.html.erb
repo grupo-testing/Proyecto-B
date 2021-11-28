@@ -1,0 +1,42 @@
+<% provide(:title, "Función") %>
+<% provide(:header, "Seleccionar Sala") %>
+
+<p><%= alert %></p>
+
+<%= form_with(url: reservations_schedule_path) do |form| %>
+  <%= form.hidden_field :date, value: @date %>
+
+  <%= form.label :seats, "Cantidad de asientos" %>
+  <%= form.select :seats, (1..12) %>
+
+  <div class="screenings-list">
+    <div class="screening-card">
+      <h3>Matine</h3>
+      <% @matine.each do |screening| %>
+        <%= form.radio_button :screening_id, screening.id %>
+        <%= form.label :screening_id, "Sala #{screening.room_id}" %>
+        <br>
+      <% end %>
+    </div>
+    <div class="screening-card">
+      <h3>Tanda</h3>
+      <% @tanda.each do |screening| %>
+        <%= form.radio_button :screening_id, screening.id %>
+        <%= form.label :screening_id, "Sala #{screening.room_id}" %>
+        <br>
+      <% end %>
+    </div>
+    <div class="screening-card">
+      <h3>Noche</h3>
+      <% @noche.each do |screening| %>
+        <%= form.radio_button :screening_id, screening.id %>
+        <%= form.label :screening_id, "Sala #{screening.room_id}" %>
+        <br>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

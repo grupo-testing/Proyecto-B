@@ -3,7 +3,19 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.all
+    p Movie.first.screenings
+    if !flash[:date].nil?
+      @date = flash[:date]
+      @movies = Movie.all.filter {|m| m.screenings.first.first_day <= Date.parse(@date) && m.screenings.first.last_day >= Date.parse(@date)}
+    else
+      @date = Date.today
+      @movies = Movie.all.filter {|m| m.screenings.first.first_day <= @date && m.screenings.first.last_day >= @date}
+    end
+  end
+
+  def search_movies
+    flash[:date] = params[:date]
+    redirect_to root_path
   end
 
   # GET /movies/1 or /movies/1.json
@@ -26,6 +38,35 @@ class MoviesController < ApplicationController
       render :new, status: :unprocessable_entity
       return
     end
+    if params[:last_day] < params[:first_day]
+      render :new, status: :unprocessable_entity
+      return
+    end
+
+    screenings = Screening.all
+    filtered = screenings.select do |s| 
+      if s.first_day <= Date.parse(params[:last_day]) && s.last_day >= Date.parse(params[:first_day])
+        true
+      else
+        false
+      end
+    end
+    
+    matine = filtered.select{ |s| s.schedule == 0 }.map { |s| s.room_id }
+    tanda = filtered.select{ |s| s.schedule == 1 }.map { |s| s.room_id }
+    noche = filtered.select{ |s| s.schedule == 2 }.map { |s| s.room_id }
+    if !params[:matine].nil? && (matine & params[:matine].map{ |r| get_room r }).length > 0
+      render :new, status: :unprocessable_entity
+      return
+    end
+    if !params[:tanda].nil? && (tanda & params[:tanda].map{ |r| get_room r }).length > 0
+      render :new, status: :unprocessable_entity
+      return
+    end
+    if !params[:noche].nil? && (noche & params[:noche].map{ |r| get_room r }).length > 0
+      render :new, status: :unprocessable_entity
+      return
+    end
 
     @movie = Movie.new(name: params[:name], img: params[:img])
 
@@ -38,7 +79,7 @@ class MoviesController < ApplicationController
     assing_rooms(params[:tanda],  first_day: params[:first_day], last_day: params[:last_day], schedule: 1)
     assing_rooms(params[:noche],  first_day: params[:first_day], last_day: params[:last_day], schedule: 2)
 
-    redirect_to screenings_path, notice: "Movie was successfully created."
+    redirect_to root_path, notice: "Movie was successfully created."
   end
 
   # PATCH/PUT /movies/1 or /movies/1.json

@@ -13,29 +13,30 @@
 ActiveRecord::Schema.define(version: 2021_11_27_010731) do
 
   create_table "movies", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "img", null: false
   end
 
   create_table "reservations", force: :cascade do |t|
-    t.string "user_name"
+    t.string "user_name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "seat_number", null: false
+    t.date "date", null: false
     t.integer "screening_id"
     t.index ["screening_id"], name: "index_reservations_on_screening_id"
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.integer "number"
+    t.integer "number", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "screenings", force: :cascade do |t|
-    t.integer "schedule"
+    t.integer "schedule", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.date "first_day", null: false

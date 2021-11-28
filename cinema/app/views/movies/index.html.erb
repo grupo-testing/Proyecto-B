@@ -1,27 +1,44 @@
+<% provide(:header, "Películas") %>
+
+
 <p id="notice"><%= notice %></p>
 
-<h1>Movies</h1>
+<%= link_to "Agregar Película", movies_new_path, class: "add-movie-btn" %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= form_with(url: search_movies_path) do |form| %>
+  <div class="field">
+    <%= form.label :date, 'Fecha', class: "new-movie-label" %>
+    <%= form.date_field :date, min: Date.today, value: @date, class: "new-movie-input" %>
+  </div>
 
-  <tbody>
-    <% @movies.each do |movie| %>
-      <tr>
-        <td><%= movie.name %></td>
-        <td><%= link_to 'Show', movie %></td>
-        <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-        <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="actions">
+    <%= form.submit "Cambiar fecha" %>
+  </div>
+<% end %>
 
-<br>
+<h1>Películas</h1>
 
-<%= link_to 'New Movie', new_movie_path %>
+<div class="movies-list">
+<% @movies.each do |movie| %>
+  <%= link_to select_screening_path(movie, date: @date), class: "movie-card" do%>
+    <img src=<%= movie.img %> alt=<%= movie.name %> width="240" height="300"> 
+    <h2><%= movie.name %></h2>
+    <h3>Horarios</h3>
+    <p><span>Matine: </span>
+      <% movie.screenings.filter{|s| s.schedule == 0}.each_with_index do |s,i| %>
+        <%= (i + 1) < movie.screenings.filter{|s| s.schedule == 0}.length ? "SALA #{s.room_id}, " : "SALA #{s.room_id}" %>
+      <% end %>
+    </p>
+    <p><span>Tanda: </span>
+      <% movie.screenings.filter{|s| s.schedule == 1}.each_with_index do |s,i| %>
+        <%= (i + 1) < movie.screenings.filter{|s| s.schedule == 1}.length ? "SALA #{s.room_id}, " : "SALA #{s.room_id}" %>
+      <% end %>
+    </p>
+    <p><span>Noche: </span>
+      <% movie.screenings.filter{|s| s.schedule == 2}.each_with_index do |s,i| %>
+        <%= (i + 1) < movie.screenings.filter{|s| s.schedule == 2}.length ? "SALA #{s.room_id}, " : "SALA #{s.room_id}" %>
+      <% end %>
+    </p>
+  <% end %>
+<% end %>
+</div>

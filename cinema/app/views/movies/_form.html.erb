@@ -2,23 +2,23 @@
   <div class="row">
     <div class="col">
       <div class="field">
-        <%= form.label :name, class: "new-movie-label" %>
+        <%= form.label :name, "Nombre", class: "new-movie-label" %>
         <%= form.text_field :name,class: "new-movie-input" %>
       </div>
 
       <div class="field">
-        <%= form.label :img, 'Image url', class: "new-movie-label" %>
+        <%= form.label :img, 'Url de la imagen', class: "new-movie-label" %>
         <%= form.text_field :img, class: "new-movie-input" %>
       </div>
     </div>
     <div class="col">
       <div class="field">
-        <%= form.label :first_day, class: "new-movie-label" %>
+        <%= form.label :first_day, "Primer día", class: "new-movie-label" %>
         <%= form.date_field :first_day, min: Date.today,class: "new-movie-input" %>
       </div>
 
       <div class="field">
-        <%= form.label :last_day, class: "new-movie-label" %>
+        <%= form.label :last_day, "Último día", class: "new-movie-label" %>
         <%= form.date_field :last_day, min: Date.today,class: "new-movie-input" %>
       </div>
     </div>
@@ -53,6 +53,6 @@
   </div>
 
   <div class="movies-actions">
-    <%= form.submit %>
+    <%= form.submit "Agregar" %>
   </div>
 <% end %>
