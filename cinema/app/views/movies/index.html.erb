@@ -1,9 +1,9 @@
-<% provide(:header, "Movies") %>
+<% provide(:header, "Películas") %>
 
 
 <p id="notice"><%= notice %></p>
 
-<%= link_to "Add Movie", movies_new_path, class: "add-movie-btn" %>
+<%= link_to "Agregar Película", movies_new_path, class: "add-movie-btn" %>
 
 <%= form_with(url: search_movies_path) do |form| %>
   <div class="field">
@@ -12,11 +12,11 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Cambiar fecha" %>
   </div>
 <% end %>
 
-<h1>Movies</h1>
+<h1>Películas</h1>
 
 <div class="movies-list">
 <% @movies.each do |movie| %>

@@ -1,12 +1,12 @@
-<% provide(:title, "Select Screening") %>
-<% provide(:header, "Select Screening") %>
+<% provide(:title, "Función") %>
+<% provide(:header, "Seleccionar Sala") %>
 
 <p><%= alert %></p>
 
 <%= form_with(url: reservations_schedule_path) do |form| %>
   <%= form.hidden_field :date, value: @date %>
 
-  <%= form.label :seats, "Seats number" %>
+  <%= form.label :seats, "Cantidad de asientos" %>
   <%= form.select :seats, (1..12) %>
 
   <div class="screenings-list">

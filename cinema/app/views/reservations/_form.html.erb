@@ -4,7 +4,7 @@
   <%= form.hidden_field :date, value: @date %>
 
   <div class="field">
-    <%= form.label :name, class: "new-movie-label" %>
+    <%= form.label :name, "Nombre", class: "new-movie-label" %>
     <%= form.text_field :name,class: "new-movie-input" %>
   </div>
 
@@ -18,7 +18,7 @@
     <% end %>
   </div>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Reservar" %>
   </div>
 <% end %>
 
