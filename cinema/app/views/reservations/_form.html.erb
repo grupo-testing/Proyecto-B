@@ -4,7 +4,7 @@
   <%= form.hidden_field :date, value: @date %>
   <% (1..48).each do |key| %>
     <% p @unavailable_seats %>
-    <%= form.check_box :seats, { multiple: true, disabled: @unavailable_seats.include?(key) }, key, nil %>
+    <%= form.check_box :seats, { multiple: true, disabled: @unavailable_seats.include?(key), style: 'display:none' }, key, nil %>
   <% end %>
 
   <div class=cinema-seats>
