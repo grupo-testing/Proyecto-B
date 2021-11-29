@@ -53,7 +53,10 @@ class MoviesController < ApplicationController
       redirect_back(fallback_location: root_path, alert: "Url de la imagen es un campo obligatorio")
       return
     end
-
+    if !params[:img].match?(/(https?:\/\/.*.(?:png|jpg))/i)
+      redirect_back(fallback_location: root_path, alert: "Ingresa un url válido")
+      return
+    end
 
     screenings = Screening.all
     filtered = screenings.select do |s| 
