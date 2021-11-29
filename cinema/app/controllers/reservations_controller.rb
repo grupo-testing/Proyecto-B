@@ -35,6 +35,8 @@ class ReservationsController < ApplicationController
     @screening = Screening.find(params[:id])
     @unavailable_seats = @screening.reservations.filter{ |r| r.date == Date.parse(@date) }.map { |r| r.seat_number }
     @seats = params[:seats].to_i
+    @movie = Movie.find(@screening.movie.id)
+
     # create reservation with the screening
   end
 

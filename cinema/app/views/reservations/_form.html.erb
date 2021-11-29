@@ -3,10 +3,34 @@
 <%= form_with(url: reservations_create_path(@screening), data: {seats: @seats }) do |form| %>
   <%= form.hidden_field :date, value: @date %>
 
-  <div class="field">
-    <%= form.label :name, "Nombre", class: "new-movie-label" %>
-    <%= form.text_field :name,class: "new-movie-input" %>
+  <div class="row" style="min-width: 80%;">
+    <div class="col" style= "max-width: 20%;">
+      <img class="" src=<%= @movie.img%> alt="Movie Image" width="200" height="300">
+    </div>
+    <div class="col" style= "margin-left: 20px;" >
+      <h2>Información Reserva</h2>
+      <strong>Nombre Película: </strong><%= @movie.name %>
+      <br>
+      <br>
+      <strong>Fecha Función: </strong><%= @date %>
+      <br>
+      <br>
+      <strong>Horario: </strong><%= get_schedule_label(@screening.schedule)%>
+      <br>
+      <br>
+      <strong>Sala <%= @screening.room.number%> </strong>
+      <br>
+      <br>
+      <div class="field">
+        <%= form.label :name, "Nombre Comprador", class: "new-movie-label" %>
+        <%= form.text_field :name,class: "new-movie-input" %>
+      </div>
+      <br>
+    </div>
   </div>
+  <br> 
+  <br>
+  <h2>Seleccionar Asientos</h2>
 
   <% (1..48).each do |key| %>
     <%= form.check_box :seats, { multiple: true, disabled: @unavailable_seats.include?(key), style: 'display:none' }, key, nil %>
