@@ -10,24 +10,27 @@ checkboxes.forEach((cb) => {
 const seats = document.querySelector(".cinema-seats");
 
 seats.addEventListener("click", (e) => {
-  console.log(checkboxes[e.target.id - 1].disabled);
-  if (checkboxes[e.target.id - 1].disabled) {
+  let realTarget = e.target;
+  if (!realTarget.id) {
+    realTarget = e.target.parentElement
+  }
+  if (checkboxes[realTarget.id - 1].disabled) {
     return;
   }
   for (let i = 0; i < n; i++) {
     if (
-      !checkboxes[e.target.id - 1] ||
-      checkboxes[e.target.id - 1 + i].disabled ||
-      ((e.target.id - 1 + i) % 12 === 0 && (e.target.id - 1) % 12 !== 0)
+      !checkboxes[realTarget.id - 1] ||
+      checkboxes[realTarget.id - 1 + i].disabled ||
+      ((realTarget.id - 1 + i) % 12 === 0 && (realTarget.id - 1) % 12 !== 0)
     ) {
       return;
     }
   }
   clearSeats();
-  let box = e.target;
+  let box = realTarget;
   for (let i = 0; i < n; i++) {
-    checkboxes[e.target.id - 1 + i].checked =
-      !checkboxes[e.target.id - 1 + i].checked;
+    checkboxes[realTarget.id - 1 + i].checked =
+      !checkboxes[realTarget.id - 1 + i].checked;
     box.classList.toggle("selected");
     box = box.nextElementSibling;
   }
