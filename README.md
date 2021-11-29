@@ -46,6 +46,12 @@ A continuación se detallan los pasos a seguir para ejecutar el programa utiliza
       # Correr la aplicación
       rails server 
     ```
+3. Una vez se encuentre corriendo el servidor, la aplicación se puede ver en el siguiente [link](http://localhost:3000/)
+    
+* En caso de ocurrir el siguiente error: 
+  ![image](https://user-images.githubusercontent.com/42227724/143793854-1dc90d09-e678-4a08-b944-7c60b00ac760.png)
+  
+  Se debe correr el comando ```bundle exec rake webpacker:install```
 
 ## Testing<a name="id3"></a>
 
@@ -53,7 +59,7 @@ A continuación se detallan los pasos a seguir para ejecutar el programa utiliza
 
 ## Demo<a name="id4"></a>
 
-En el siguiente [link]() se encuentra una demo donde se puede ver el funcionamiento del juego.
+En el siguiente [link]() se encuentra una demo donde se puede ver el funcionamiento de`la aplicación.
 
 ⚠️ FALTA EL LINK 
 ## Integrantes<a name="id5"></a>
