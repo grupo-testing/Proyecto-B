@@ -1,4 +1,4 @@
-<p><%= alert %></p>
+<p class="error"><%= alert %></p>
 
 <%= form_with(url: reservations_create_path(@screening), data: {seats: @seats }) do |form| %>
   <%= form.hidden_field :date, value: @date %>

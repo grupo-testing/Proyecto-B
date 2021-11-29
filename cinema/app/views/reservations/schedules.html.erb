@@ -1,7 +1,7 @@
 <% provide(:title, "Función") %>
 <% provide(:header, "Seleccionar Sala") %>
 
-<p><%= alert %></p>
+<p class="error"><%= alert %></p>
 
 <%= form_with(url: reservations_schedule_path) do |form| %>
   <%= form.hidden_field :date, value: @date %>
