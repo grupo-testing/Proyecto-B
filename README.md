@@ -55,11 +55,15 @@ A continuación se detallan los pasos a seguir para ejecutar el programa utiliza
 
 ## Testing<a name="id3"></a>
 
+Se crearon tests para el happy path de la aplicación usando Capybara, estos tests se pueden ejecutar con el siguiente comando:
 
+  ```
+  rspec
+  ```
 
 ## Demo<a name="id4"></a>
 
-En el siguiente [link](https://www.youtube.com/watch?v=8XUewrWYYB8) se encuentra una demo donde se puede ver el funcionamiento de`la aplicación.
+En el siguiente [link](https://www.youtube.com/watch?v=8XUewrWYYB8) se encuentra una demo donde se puede ver el funcionamiento de la aplicación.
 
 ## Integrantes<a name="id5"></a>
 
